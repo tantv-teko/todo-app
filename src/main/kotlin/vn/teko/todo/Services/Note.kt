@@ -8,7 +8,8 @@ import javax.persistence.Id
 @Entity
 data class Note(
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    val noteId: Long = 0,
+    val noteId: Long,
     var title: String? = "",
-    var content: String? =""
-)
+    var content: String? ="") {
+    constructor(title: String?, content: String?) : this(1, title, content)
+}
