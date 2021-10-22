@@ -1,15 +1,14 @@
-package vn.teko.todo.Services
+package vn.teko.todo.services
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import com.fasterxml.jackson.annotation.JsonFormat
+import javax.persistence.Column
 
-@Entity
 data class Note(
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     val noteId: Long,
     var title: String? = "",
-    var content: String? ="") {
-    constructor(title: String?, content: String?) : this(1, title, content)
-}
+    var content: String? ="",
+    var colorId: Long,
+    val createAt: String?,
+    var editedAt: String?,
+
+)

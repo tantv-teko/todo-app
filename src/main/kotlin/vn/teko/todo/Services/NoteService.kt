@@ -1,8 +1,8 @@
-package vn.teko.todo.Services
+package vn.teko.todo.services
 
 import vn.teko.todo.controllers.NoteDto
 
 interface NoteService {
-    fun getAllnotes() : MutableList<NoteDto>;
-    fun addNote(title: String?, content: String?);
+    fun getNotes() : List<Note>
+    fun addNote(note: Note): Note
 }

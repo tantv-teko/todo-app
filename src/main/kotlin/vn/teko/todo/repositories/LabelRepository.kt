@@ -1,8 +1,12 @@
+/*
 package vn.teko.todo.repositories
 
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
+import vn.teko.todo.Services.Label
 
 @Repository
-interface NoteRepository:CrudRepository<NoteModel, Long> {
+interface LabelRepositories: CrudRepository<Label, Long> {
 }
+
+ */
