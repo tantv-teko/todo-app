@@ -4,7 +4,7 @@ interface LabelService {
     fun getLables() : List<Label>
     fun addLabel(label: Label) : Label
     fun findLabelByid(id: Long) : Label
-    fun updateLabel(id: Long, name: String?) : Label
+    fun updateLabel(id: Long, newLabel: Label) : Label
     fun deleteLabel(id: Long) : Label
 }
 

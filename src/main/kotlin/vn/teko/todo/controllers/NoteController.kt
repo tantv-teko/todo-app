@@ -21,6 +21,13 @@ class NoteController(
         return ResponseEntity.ok(listNoteDto)
     }
 
+    @GetMapping("/{id}")
+    fun findNoteById(
+        @PathVariable id: Long,
+    ): ResponseEntity<NoteDto> {
+        return ResponseEntity.ok(notesevice.findNoteById(id).toNoteDto())
+    }
+
     @PostMapping
     fun addNotes(
         @RequestBody noteDto: NoteDto,
@@ -29,21 +36,13 @@ class NoteController(
         return ResponseEntity.ok(notesevice.addNote(noteDto.toNote()).toNoteDto())
     }
 
-    @GetMapping("/{id}")
-    fun findNoteById(
-        @PathVariable id: Long,
-    ): ResponseEntity<NoteDto> {
-        return ResponseEntity.ok(notesevice.findNoteById(id).toNoteDto())
-    }
-
     @PutMapping
     fun updateNote(
         @PathVariable id: Long,
-        noteDto: NoteDto,
+        @RequestBody noteDto: NoteDto,
     ): ResponseEntity<NoteDto> {
         return ResponseEntity.ok(notesevice.updateNote(id, noteDto.toNote()).toNoteDto())
     }
-
 
     @DeleteMapping("/{id}")
     fun  deleteNote(
@@ -51,6 +50,7 @@ class NoteController(
     ): ResponseEntity<NoteDto> {
         return ResponseEntity.ok(notesevice.deleteNote(id).toNoteDto())
     }
+
 }
 
 

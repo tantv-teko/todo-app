@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface LabelRepository: CrudRepository<LabelModel, Long>{
-    fun getLabelModelById(id: Long) : LabelModel
+    fun findLabelModelById(id: Long) : LabelModel
 }

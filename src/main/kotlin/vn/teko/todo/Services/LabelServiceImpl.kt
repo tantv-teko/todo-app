@@ -24,11 +24,19 @@ class LabelServiceImpl(
     }
 
     override fun findLabelByid(id: Long): Label {
-        return labelRepositories.getLabelModelById(id).toLabel()
+        return labelRepositories.findLabelModelById(id).toLabel()
     }
 
-    override fun updateLaBel(id: Long): Label {
+    override fun updateLabel(id: Long, newLabel: Label): Label {
+        var label = labelRepositories.findLabelModelById(id).toLabel()
+        label.name = newLabel.name
+        return labelRepositories.save(label.toLabelModel()).toLabel()
+    }
 
+    override fun deleteLabel(id: Long): Label {
+        var label = labelRepositories.findLabelModelById(id).toLabel()
+        labelRepositories.deleteById(id)
+        return label
     }
 }
 

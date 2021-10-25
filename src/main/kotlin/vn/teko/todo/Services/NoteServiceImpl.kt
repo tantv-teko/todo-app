@@ -32,8 +32,7 @@ class NoteServiceImpl(
         note.title = newNote.title
         note.content = newNote.content
         note.colorId = newNote.noteId
-        noteRepository.save(note.toNoteModel())
-        return note
+        return noteRepository.save(note.toNoteModel()).toNote()
     }
 
     override fun deleteNote(id: Long): Note {
