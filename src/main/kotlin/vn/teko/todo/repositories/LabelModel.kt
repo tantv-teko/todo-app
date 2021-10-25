@@ -1,22 +1,23 @@
-/*
 package vn.teko.todo.repositories
 
-import org.springframework.stereotype.Component
+
 import vn.teko.todo.Services.Label
-import vn.teko.todo.controllers.LabelDto
+import javax.persistence.*
 
-@Component
-class LabelModel {
-    fun mapToDto(label: Label) : LabelDto {
-        var labelDto =  LabelDto(label.labelId, label.name)
-        return labelDto;
-    }
+@Entity
+@Table(name = "label")
+data class LabelModel(
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long,
+    var name: String?,
+)
 
-    fun mapToEntity(labelDto: LabelDto) : Label {
-        var label = Label(labelDto.labelId, labelDto.name)
-        return  label;
-    }
-}
+fun LabelModel.toLabel() : Label = Label(
+    labelId = this.id,
+    name = this.name,
+)
 
-
- */
+fun Label.toLabelModel() : LabelModel = LabelModel(
+    id = this.labelId,
+    name = this.name,
+)

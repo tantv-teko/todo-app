@@ -12,7 +12,7 @@ data class NoteDto(
     var editedAt: String?,
 )
 
-fun Note.toDto() = NoteDto(
+fun Note.toNoteDto() = NoteDto(
     id = this.noteId,
     title = this.title,
     content = this.content,

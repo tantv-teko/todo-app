@@ -18,7 +18,7 @@ fun ColorDto.toColor(): Color = Color(
 )
 
 
-fun Color.toDto(): ColorDto = ColorDto(
+fun Color.toColorDto(): ColorDto = ColorDto(
     id = this.colorId,
     name = this.name,
     code = this.code,

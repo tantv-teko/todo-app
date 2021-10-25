@@ -1,28 +1,32 @@
-/*
 package vn.teko.todo.controllers
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import vn.teko.todo.Services.LabelService
 
 @RestController
+@RequestMapping("/api/labels")
 class LabelController(
-    @Autowired private val labelService: LabelService) {
-
-    @GetMapping("/GET/api/labels")
-    fun getAllLabels(): ResponseEntity<MutableList<LabelDto>> {
-        return ResponseEntity.ok(labelService.getAllLable())
+    private val labelService: LabelService,
+) {
+    @GetMapping
+    fun getAllLabels(): ResponseEntity<List<LabelDto>> {
+        println("getAllLaybel")
+        val listLabels = labelService.getLables()
+        var listLabelDto = mutableListOf<LabelDto>()
+        listLabels.forEach() {
+            listLabelDto.add(it.toLabelDto())
+        }
+        return ResponseEntity.ok(listLabelDto)
     }
 
-    @PostMapping("/Post/api/labels")
-    fun createLabel(@RequestBody labelDto: LabelDto): ResponseEntity<LabelDto> {
-        return ResponseEntity.ok(labelService.createLable(labelDto))
+    @PostMapping
+    fun addLabel(
+        @RequestBody labelDto: LabelDto,
+    ): ResponseEntity<LabelDto> {
+        println("post Label")
+        return ResponseEntity.ok(labelService.addLabel(labelDto.toLabel()).toLabelDto())
+
     }
-
-
 }
-*/
+

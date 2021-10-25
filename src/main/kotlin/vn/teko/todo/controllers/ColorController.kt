@@ -8,7 +8,6 @@ import vn.teko.todo.services.ColorService
 @RequestMapping("/api/colors")
 class ColorController(
     private val colorService: ColorService,
-
 ) {
 
     @GetMapping
@@ -17,7 +16,7 @@ class ColorController(
         val listColor = colorService.getColors()
         var listColorDto = mutableListOf<ColorDto>()
         listColor.forEach() {
-            listColorDto.add(it.toDto())
+            listColorDto.add(it.toColorDto())
         }
         return ResponseEntity.ok(listColorDto)
     }
@@ -27,8 +26,24 @@ class ColorController(
         @RequestBody colorDto: ColorDto,
     ): ResponseEntity<ColorDto> {
         println("post Color")
-        return ResponseEntity.ok(colorService.addColor(colorDto.toColor()).toDto())
+        return ResponseEntity.ok(colorService.addColor(colorDto.toColor()).toColorDto())
 
     }
 
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

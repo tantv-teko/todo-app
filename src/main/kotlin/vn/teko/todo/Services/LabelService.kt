@@ -1,11 +1,10 @@
-/*
 package vn.teko.todo.Services
 
-import vn.teko.todo.controllers.LabelDto
-
 interface LabelService {
-    fun getAllLable() : MutableList<LabelDto>
-    fun createLable(labelDto: LabelDto) : LabelDto
+    fun getLables() : List<Label>
+    fun addLabel(label: Label) : Label
+    fun findLabelByid(id: Long) : Label
+    fun updateLabel(id: Long, name: String?) : Label
+    fun deleteLabel(id: Long) : Label
 }
 
- */

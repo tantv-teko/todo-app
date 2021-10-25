@@ -16,21 +16,41 @@ class NoteController(
         val listNote = notesevice.getNotes()
         var listNoteDto = mutableListOf<NoteDto>()
         listNote.forEach() {
-            listNoteDto.add(it.toDto())
+            listNoteDto.add(it.toNoteDto())
         }
         return ResponseEntity.ok(listNoteDto)
     }
-
 
     @PostMapping
     fun addNotes(
         @RequestBody noteDto: NoteDto,
     ): ResponseEntity<NoteDto> {
         println("Post Note")
-        return ResponseEntity.ok(notesevice.addNote(noteDto.toNote()).toDto())
+        return ResponseEntity.ok(notesevice.addNote(noteDto.toNote()).toNoteDto())
+    }
+
+    @GetMapping("/{id}")
+    fun findNoteById(
+        @PathVariable id: Long,
+    ): ResponseEntity<NoteDto> {
+        return ResponseEntity.ok(notesevice.findNoteById(id).toNoteDto())
+    }
+
+    @PutMapping
+    fun updateNote(
+        @PathVariable id: Long,
+        noteDto: NoteDto,
+    ): ResponseEntity<NoteDto> {
+        return ResponseEntity.ok(notesevice.updateNote(id, noteDto.toNote()).toNoteDto())
     }
 
 
+    @DeleteMapping("/{id}")
+    fun  deleteNote(
+        @PathVariable id: Long,
+    ): ResponseEntity<NoteDto> {
+        return ResponseEntity.ok(notesevice.deleteNote(id).toNoteDto())
+    }
 }
 
 
