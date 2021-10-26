@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset testauthor:testid2
+--changeset chiennv:id02
 
 DROP TABLE IF EXISTS note;
 CREATE TABLE note (
