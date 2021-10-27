@@ -2,7 +2,6 @@ package vn.teko.todo.repositories
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import vn.teko.todo.services.Note
-import java.sql.Time
 import java.util.Date
 import javax.persistence.*
 
@@ -21,7 +20,7 @@ data class NoteModel(
 
 fun NoteModel.toNote(): Note = Note(
     noteId = this.id,
-    title =this.title,
+    title = this.title,
     content = this.content,
     createAt = this.createAt,
     editedAt = this.editedAt,
@@ -34,3 +33,4 @@ fun Note.toNoteModel(): NoteModel = NoteModel(
     createAt = this.createAt,
     editedAt = this.editedAt,
 )
+
