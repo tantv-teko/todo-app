@@ -1,0 +1,35 @@
+package vn.teko.todo.repositories
+
+import vn.teko.todo.services.Note
+import java.time.LocalDateTime
+import javax.persistence.*
+
+@Entity
+@Table(name = "notes")
+data class NoteModel(
+    @Id 
+    val id: Long,
+    val title: String? = "",
+    val content: String? = "",
+    @Column(name = "create_at")
+    val createAt: LocalDateTime,
+    @Column(name = "edited_at")
+    var editedAt: LocalDateTime,
+)
+
+fun NoteModel.toNote(): Note = Note(
+    id = this.id,
+    title = this.title,
+    content = this.content,
+    createAt = this.createAt,
+    editedAt = this.editedAt,
+)
+
+fun Note.toNoteModel(): NoteModel = NoteModel(
+    id = this.id,
+    title = this.title,
+    content = this.content,
+    createAt = this.createAt,
+    editedAt = this.editedAt,
+)
+
