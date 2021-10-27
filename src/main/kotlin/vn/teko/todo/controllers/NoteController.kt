@@ -15,4 +15,34 @@ class NoteController(
         val noteDtos = noteSevice.getNotes().map { it.toNoteDto() }
         return ResponseEntity.ok(noteDtos)
     }
+
+    @GetMapping("/{id}")
+    fun findNoteById(
+        @PathVariable id: Long,
+    ): ResponseEntity<NoteDto> {
+        return ResponseEntity.ok(noteSevice.findNoteById(id).toNoteDto())
+    }
+
+    @PostMapping
+    fun addNotes(
+        @RequestBody noteDto: NoteDto,
+    ): ResponseEntity<NoteDto> {
+        return ResponseEntity.ok(noteSevice.addNote(noteDto.toNote()).toNoteDto())
+    }
+
+    @PutMapping("/{id}")
+    fun updateNote(
+        @PathVariable id: Long,
+        @RequestBody noteDto: NoteDto,
+    ): ResponseEntity<NoteDto> {
+        return ResponseEntity.ok(noteSevice.updateNote(id, noteDto.toNote()).toNoteDto())
+    }
+
+    @DeleteMapping("/{id}")
+    fun  deleteNote(
+        @PathVariable id: Long,
+    ): ResponseEntity<NoteDto> {
+        return ResponseEntity.ok(noteSevice.deleteNote(id).toNoteDto())
+    }
+
 }
