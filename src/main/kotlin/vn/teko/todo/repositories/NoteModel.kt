@@ -7,7 +7,7 @@ import javax.persistence.*
 @Entity
 @Table(name = "notes")
 data class NoteModel(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id 
     val id: Long,
     val title: String? = "",
     val content: String? = "",
