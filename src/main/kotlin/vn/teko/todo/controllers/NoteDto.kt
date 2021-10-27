@@ -2,16 +2,16 @@ package vn.teko.todo.controllers
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import vn.teko.todo.services.Note
-import java.util.Date
+import java.util.*
 
 data class NoteDto(
     val id: Long,
     var title: String? = "",
     var content: String? = "",
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
-    val createAt: Date?,
+    val createAt: Date? = Calendar.getInstance().time,
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
-    var editedAt: Date?,
+    var editedAt: Date? = Calendar.getInstance().time,
 )
 
 fun Note.toNoteDto() = NoteDto(

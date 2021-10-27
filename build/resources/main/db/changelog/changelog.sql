@@ -7,6 +7,6 @@ CREATE TABLE notes (
     id int primary key AUTO_INCREMENT,
     title varchar(64),
     content varchar(255),
-    create_at DateTime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    edited_at DateTime NOT NULL DEFAULT CURRENT_TIMESTAMP
+    create_at DateTime DEFAULT CURRENT_TIMESTAMP,
+    edited_at DateTime DEFAULT CURRENT_TIMESTAMP
 );
