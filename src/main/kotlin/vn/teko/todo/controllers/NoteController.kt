@@ -12,7 +12,7 @@ class NoteController(
 
     @GetMapping
     fun getAllnotes(): ResponseEntity<List<NoteDto>> {
-        val noteDtos = noteSevice.getNotes().map { Note -> Note.toNoteDto() }
+        val noteDtos = noteSevice.getNotes().map { it.toNoteDto() }
         return ResponseEntity.ok(noteDtos)
     }
 }
