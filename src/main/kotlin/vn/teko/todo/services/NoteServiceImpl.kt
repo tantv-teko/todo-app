@@ -20,21 +20,16 @@ class NoteServiceImpl(
         return noteRepository.save(note.toNoteModel()).toNote()
     }
 
-    override fun findNoteById(id: Long): Note {
-        return  noteRepository.findNoteModelById(id).toNote()
+    override fun getNote(id: Long): Note {
+        return  noteRepository.findById(id).map { it.toNote() }.get()
     }
 
-    override fun updateNote(id: Long, newNote: Note): Note {
-        var note = noteRepository.findNoteModelById(id).toNote()
-        note.title = newNote.title
-        note.content = newNote.content
+    override fun updateNote(note: Note): Note {
         note.editedAt = LocalDateTime.now()
         return noteRepository.save(note.toNoteModel()).toNote()
     }
 
-    override fun deleteNote(id: Long): Note {
-        var note = noteRepository.findNoteModelById(id).toNote()
+    override fun deleteNote(id: Long) {
         noteRepository.deleteById(id)
-        return note
     }
 }
