@@ -1,21 +1,18 @@
 package vn.teko.todo.controllers
 
-import com.fasterxml.jackson.annotation.JsonFormat
 import vn.teko.todo.services.Note
-import java.util.*
+import java.time.LocalDateTime
 
 data class NoteDto(
     val id: Long,
     var title: String? = "",
     var content: String? = "",
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
-    val createAt: Date? = Calendar.getInstance().time,
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
-    var editedAt: Date? = Calendar.getInstance().time,
+    val createAt: LocalDateTime = LocalDateTime.now(),
+    var editedAt: LocalDateTime = LocalDateTime.now(),
 )
 
 fun Note.toNoteDto() = NoteDto(
-    id = this.noteId,
+    id = this.id,
     title = this.title,
     content = this.content,
     createAt = this.createAt,
@@ -23,7 +20,7 @@ fun Note.toNoteDto() = NoteDto(
 )
 
 fun NoteDto.toNote() = Note(
-    noteId = this.id,
+    id = this.id,
     title = this.title,
     content = this.content,
     createAt = this.createAt,

@@ -1,8 +1,7 @@
 package vn.teko.todo.repositories
 
-import com.fasterxml.jackson.annotation.JsonFormat
 import vn.teko.todo.services.Note
-import java.util.Date
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -13,13 +12,13 @@ data class NoteModel(
     val title: String? = "",
     val content: String? = "",
     @Column(name = "create_at")
-    val createAt: Date?,
+    val createAt: LocalDateTime,
     @Column(name = "edited_at")
-    var editedAt: Date?,
+    var editedAt: LocalDateTime,
 )
 
 fun NoteModel.toNote(): Note = Note(
-    noteId = this.id,
+    id = this.id,
     title = this.title,
     content = this.content,
     createAt = this.createAt,
@@ -27,7 +26,7 @@ fun NoteModel.toNote(): Note = Note(
 )
 
 fun Note.toNoteModel(): NoteModel = NoteModel(
-    id = this.noteId,
+    id = this.id,
     title = this.title,
     content = this.content,
     createAt = this.createAt,

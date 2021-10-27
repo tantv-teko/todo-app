@@ -1,11 +1,11 @@
 package vn.teko.todo.services
 
-import java.util.Date
+import java.time.LocalDateTime
 
 data class Note(
-    val noteId: Long,
+    val id: Long,
     var title: String? = "",
     var content: String? = "",
-    val createAt: Date?,
-    var editedAt: Date?,
+    val createAt: LocalDateTime,
+    var editedAt: LocalDateTime,
 )
