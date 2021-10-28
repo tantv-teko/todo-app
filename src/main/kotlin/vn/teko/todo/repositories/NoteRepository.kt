@@ -5,5 +5,6 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface NoteRepository: CrudRepository<NoteModel, Long> {
+interface NoteRepository:CrudRepository<NoteModel, Long> {
+    fun findNoteModelById(id: Long) : NoteModel
 }

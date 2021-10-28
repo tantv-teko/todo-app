@@ -2,11 +2,11 @@ package vn.teko.todo.controllers
 
 import org.springframework.web.bind.annotation.*
 import org.springframework.http.ResponseEntity
-import vn.teko.todo.repositories.toNote
-import vn.teko.todo.repositories.toNoteModel
-import vn.teko.todo.resquest.NoteRequest
+import vn.teko.todo.resquest.AddNoteRequest
+import vn.teko.todo.resquest.UpdateNoteRequest
 import vn.teko.todo.resquest.toNote
 import vn.teko.todo.services.NoteService
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/notes")
@@ -20,6 +20,13 @@ class NoteController(
         return ResponseEntity.ok(noteDtos)
     }
 
+    @PostMapping
+    fun addNote(
+        @Valid @RequestBody addNoteRequest: AddNoteRequest,
+    ): ResponseEntity<NoteDto> {
+        return ResponseEntity.ok(noteSevice.addNote(addNoteRequest.toNote()).toNoteDto())
+    }
+
     @GetMapping("/{id}")
     fun getNote(
         @PathVariable id: Long,
@@ -27,31 +34,19 @@ class NoteController(
         return ResponseEntity.ok(noteSevice.getNote(id).toNoteDto())
     }
 
-    @PostMapping
-    fun addNote(
-        @RequestBody noteRequest: NoteRequest,
-    ): ResponseEntity<NoteDto> {
-        return ResponseEntity.ok(noteSevice.addNote(noteRequest.toNote()).toNoteDto())
-    }
-
     @PutMapping("/{id}")
     fun updateNote(
         @PathVariable id: Long,
-        @RequestBody noteRequest: NoteRequest,
+        @Valid @RequestBody updateNoteRequest: UpdateNoteRequest,
     ): ResponseEntity<NoteDto> {
-        var note = noteSevice.getNote(id)
-        note.title = noteRequest.title
-        note.content = noteRequest.content
-        return ResponseEntity.ok(noteSevice.updateNote(note).toNoteDto())
+        return ResponseEntity.ok(noteSevice.updateNote(id, updateNoteRequest.toNote()).toNoteDto())
     }
 
     @DeleteMapping("/{id}")
     fun  deleteNote(
         @PathVariable id: Long,
     ): ResponseEntity<NoteDto> {
-        val noteDto = noteSevice.getNote(id).toNoteDto()
-        noteSevice.deleteNote(id)
-        return ResponseEntity.ok(noteDto)
+        return ResponseEntity.ok(noteSevice.deleteNote(id).toNoteDto())
     }
 
 }
