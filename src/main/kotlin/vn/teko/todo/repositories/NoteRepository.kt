@@ -6,5 +6,5 @@ import java.util.*
 
 @Repository
 interface NoteRepository:CrudRepository<NoteModel, Long> {
-    fun findNoteModelById(id: Long) : NoteModel
+
 }
