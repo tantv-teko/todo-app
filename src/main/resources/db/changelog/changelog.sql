@@ -10,3 +10,13 @@ CREATE TABLE notes (
     create_at DateTime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     edited_at DateTime NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+--changeset chiennv:3
+
+DROP TABLE IF EXISTS colors;
+CREATE TABLE colors (
+    id int primary key AUTO_INCREMENT,
+    name varchar(64),
+    code varchar(9),
+    is_default tinyint(2)
+);
