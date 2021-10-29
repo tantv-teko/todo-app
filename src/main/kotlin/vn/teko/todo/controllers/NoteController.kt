@@ -22,9 +22,9 @@ class NoteController(
 
     @PostMapping
     fun addNote(
-        @Valid @RequestBody addNoteRequest: AddNoteRequest,
+        @Valid @RequestBody request: AddNoteRequest,
     ): ResponseEntity<NoteDto> {
-        return ResponseEntity.ok(noteSevice.addNote(addNoteRequest.toNote()).toNoteDto())
+        return ResponseEntity.ok(noteSevice.addNote(request.toNote()).toNoteDto())
     }
 
     @GetMapping("/{id}")
@@ -37,9 +37,9 @@ class NoteController(
     @PutMapping("/{id}")
     fun updateNote(
         @PathVariable id: Long,
-        @Valid @RequestBody updateNoteRequest: UpdateNoteRequest,
+        @Valid @RequestBody request: UpdateNoteRequest,
     ): ResponseEntity<NoteDto> {
-        return ResponseEntity.ok(noteSevice.updateNote(id, updateNoteRequest.toNote()).toNoteDto())
+        return ResponseEntity.ok(noteSevice.updateNote(id, request.toNote()).toNoteDto())
     }
 
     @DeleteMapping("/{id}")
