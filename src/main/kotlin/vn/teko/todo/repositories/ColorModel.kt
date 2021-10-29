@@ -22,11 +22,9 @@ fun ColorModel.toColor(): Color = Color(
     isDefault = this.isDefault,
 )
 
-
 fun Color.toColorModel(): ColorModel = ColorModel(
     id = this.colorId,
     name = this.name,
     code = this.code,
     isDefault = this.isDefault,
 )
-
