@@ -28,10 +28,10 @@ class NoteController(
     }
 
     @PostMapping
-    fun addNote(
+    fun createNote(
         @Valid @RequestBody request: AddNoteRequest,
     ): ResponseEntity<NoteDto> {
-        return ResponseEntity.ok(noteSevice.addNote(request.toNote()).toNoteDto())
+        return ResponseEntity.ok(noteSevice.createNote(request.toNote()).toNoteDto())
     }
 
     @PutMapping("/{id}")

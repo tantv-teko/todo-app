@@ -22,7 +22,7 @@ class NoteServiceImpl(
         return optionalNoteModel.toNote()
     }
 
-    override fun addNote(note: Note): Note {
+    override fun createNote(note: Note): Note {
         return noteRepository.save(note.toNoteModel()).toNote()
     }
 
