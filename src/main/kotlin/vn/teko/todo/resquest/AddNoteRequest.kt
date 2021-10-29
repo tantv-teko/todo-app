@@ -8,9 +8,9 @@ import javax.validation.constraints.Size
 data class AddNoteRequest(
     val id: Long,
     @Size(min = 8, max = 255)
-    var title: String? = "",
+    var title: String,
     @NotBlank
-    var content: String? = "",
+    var content: String,
     val createAt: LocalDateTime = LocalDateTime.now(),
     var editedAt: LocalDateTime = LocalDateTime.now(),
 )
