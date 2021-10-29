@@ -20,18 +20,18 @@ class NoteController(
         return ResponseEntity.ok(noteDtos)
     }
 
-    @PostMapping
-    fun addNote(
-        @Valid @RequestBody request: AddNoteRequest,
-    ): ResponseEntity<NoteDto> {
-        return ResponseEntity.ok(noteSevice.addNote(request.toNote()).toNoteDto())
-    }
-
     @GetMapping("/{id}")
     fun getNote(
         @PathVariable id: Long,
     ): ResponseEntity<NoteDto> {
         return ResponseEntity.ok(noteSevice.getNote(id).toNoteDto())
+    }
+
+    @PostMapping
+    fun addNote(
+        @Valid @RequestBody request: AddNoteRequest,
+    ): ResponseEntity<NoteDto> {
+        return ResponseEntity.ok(noteSevice.addNote(request.toNote()).toNoteDto())
     }
 
     @PutMapping("/{id}")

@@ -17,19 +17,18 @@ class NoteServiceImpl(
         return notes
     }
 
-    override fun addNote(note: Note): Note {
-        return noteRepository.save(note.toNoteModel()).toNote()
-    }
-
     override fun getNote(id: Long): Note {
         val optionalNoteModel = noteRepository.findById(id).orElseThrow { NotFoundException(message = "not found noteId = $id ") }
         return optionalNoteModel.toNote()
     }
 
+    override fun addNote(note: Note): Note {
+        return noteRepository.save(note.toNoteModel()).toNote()
+    }
+
     override fun updateNote(id: Long, newNote: Note): Note {
         val optionalNoteModel = noteRepository.findById(id).orElseThrow { NotFoundException(message = "not found noteId = $id ") }
-        val note = optionalNoteModel.toNote()
-        note.apply {
+        val note = optionalNoteModel.toNote().apply {
             title = newNote.title
             content = newNote.content
             editedAt = LocalDateTime.now()
