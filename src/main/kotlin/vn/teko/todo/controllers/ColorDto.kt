@@ -19,7 +19,7 @@ fun ColorDto.toColor(): Color = Color(
 
 
 fun Color.toColorDto(): ColorDto = ColorDto(
-    id = this.colorId,
+    id = this.id,
     name = this.name,
     code = this.code,
     isDefault = this.isDefault,
