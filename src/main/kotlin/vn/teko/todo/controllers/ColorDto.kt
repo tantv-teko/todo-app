@@ -11,7 +11,7 @@ data class ColorDto(
 )
 
 fun ColorDto.toColor(): Color = Color(
-    colorId = this.id,
+    id = this.id,
     name = this.name,
     code = this.code,
     isDefault = this.isDefault,
