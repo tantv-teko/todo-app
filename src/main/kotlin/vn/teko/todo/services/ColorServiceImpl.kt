@@ -15,7 +15,6 @@ class ColorServiceImpl(
     }
 
     override fun getColor(id: Long): Color {
-        println("getcolor $id")
         val optionalColorModel = colorRepository.findById(id).orElseThrow { NotFoundException(message = "not found noteId = $id ") }
         return optionalColorModel.toColor()
     }

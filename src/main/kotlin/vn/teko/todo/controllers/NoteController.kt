@@ -33,7 +33,6 @@ class NoteController(
     fun createNote(
         @Valid @RequestBody request: AddNoteRequest,
     ): ResponseEntity<NoteDto> {
-        println("add note")
         val note = Note(
             id = request.id,
             title = request.title,
@@ -50,7 +49,6 @@ class NoteController(
         @PathVariable id: Long,
         @Valid @RequestBody request: UpdateNoteRequest,
     ): ResponseEntity<NoteDto> {
-        print("update note")
         val note = Note(
             id = request.id,
             title = request.title,
