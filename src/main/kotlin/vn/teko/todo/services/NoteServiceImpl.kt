@@ -5,6 +5,7 @@ import vn.teko.todo.exception.NotFoundException
 import vn.teko.todo.repositories.NoteRepository
 import vn.teko.todo.repositories.toNote
 import vn.teko.todo.repositories.toNoteModel
+import vn.teko.todo.resquest.AddNoteRequest
 import java.time.LocalDateTime
 
 @Service
@@ -42,3 +43,4 @@ class NoteServiceImpl(
         return optionalNoteModel.toNote()
     }
 }
+

@@ -1,6 +1,7 @@
 package vn.teko.todo.resquest
 
-import vn.teko.todo.services.Note
+import org.springframework.beans.factory.annotation.Autowired
+import vn.teko.todo.services.*
 import java.time.LocalDateTime
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size
@@ -11,14 +12,7 @@ data class AddNoteRequest(
     var title: String,
     @NotBlank
     var content: String,
+    val colorId: Long = 3,
     val createAt: LocalDateTime = LocalDateTime.now(),
     var editedAt: LocalDateTime = LocalDateTime.now(),
-)
-
-fun AddNoteRequest.toNote() = Note(
-    id = this.id,
-    title = this.title,
-    content = this.content,
-    createAt = this.createAt,
-    editedAt = this.editedAt,
 )

@@ -4,7 +4,8 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.http.ResponseEntity
 import vn.teko.todo.resquest.AddNoteRequest
 import vn.teko.todo.resquest.UpdateNoteRequest
-import vn.teko.todo.resquest.toNote
+import vn.teko.todo.services.ColorService
+import vn.teko.todo.services.Note
 import vn.teko.todo.services.NoteService
 import javax.validation.Valid
 
@@ -12,6 +13,7 @@ import javax.validation.Valid
 @RequestMapping("/api/notes")
 class NoteController(
     private val noteSevice: NoteService,
+    val colorService: ColorService,
 ) {
 
     @GetMapping
@@ -31,7 +33,16 @@ class NoteController(
     fun createNote(
         @Valid @RequestBody request: AddNoteRequest,
     ): ResponseEntity<NoteDto> {
-        return ResponseEntity.ok(noteSevice.createNote(request.toNote()).toNoteDto())
+        println("add note")
+        val note = Note(
+            id = request.id,
+            title = request.title,
+            content = request.content,
+            color = colorService.getColor(request.colorId),
+            createAt = request.createAt,
+            editedAt = request.editedAt,
+        )
+        return ResponseEntity.ok(noteSevice.createNote(note).toNoteDto())
     }
 
     @PutMapping("/{id}")
@@ -39,7 +50,16 @@ class NoteController(
         @PathVariable id: Long,
         @Valid @RequestBody request: UpdateNoteRequest,
     ): ResponseEntity<NoteDto> {
-        return ResponseEntity.ok(noteSevice.updateNote(id, request.toNote()).toNoteDto())
+        print("update note")
+        val note = Note(
+            id = request.id,
+            title = request.title,
+            content = request.content,
+            color = colorService.getColor(request.colorId),
+            createAt = request.createAt,
+            editedAt = request.editedAt,
+        )
+        return ResponseEntity.ok(noteSevice.updateNote(id, note).toNoteDto())
     }
 
     @DeleteMapping("/{id}")
