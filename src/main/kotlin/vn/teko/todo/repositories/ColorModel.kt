@@ -16,14 +16,14 @@ data class ColorModel(
 )
 
 fun ColorModel.toColor(): Color = Color(
-    colorId = this.id,
+    id = this.id,
     name = this.name,
     code = this.code,
     isDefault = this.isDefault,
 )
 
 fun Color.toColorModel(): ColorModel = ColorModel(
-    id = this.colorId,
+    id = this.id,
     name = this.name,
     code = this.code,
     isDefault = this.isDefault,
