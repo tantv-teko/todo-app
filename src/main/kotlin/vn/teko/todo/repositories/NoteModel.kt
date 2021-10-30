@@ -32,4 +32,3 @@ fun Note.toNoteModel(): NoteModel = NoteModel(
     createAt = this.createAt,
     editedAt = this.editedAt,
 )
-

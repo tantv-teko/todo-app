@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface NoteRepository: CrudRepository<NoteModel, Long> {
+interface ColorRepository: CrudRepository<ColorModel, Long> {
 
 }
