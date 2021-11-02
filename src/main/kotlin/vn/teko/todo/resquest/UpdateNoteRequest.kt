@@ -11,6 +11,7 @@ data class UpdateNoteRequest(
     var title: String,
     @NotBlank
     var content: String,
+    var colorId: Long,
     val createAt: LocalDateTime = LocalDateTime.now(),
     var editedAt: LocalDateTime = LocalDateTime.now(),
 )
@@ -19,6 +20,7 @@ fun UpdateNoteRequest.toNote() = Note(
     id = this.id,
     title = this.title,
     content = this.content,
+    colorId = this.colorId,
     createAt = this.createAt,
     editedAt = this.editedAt,
 )

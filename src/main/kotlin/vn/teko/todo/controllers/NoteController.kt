@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity
 import vn.teko.todo.resquest.AddNoteRequest
 import vn.teko.todo.resquest.UpdateNoteRequest
 import vn.teko.todo.resquest.toNote
+import vn.teko.todo.services.ColorService
 import vn.teko.todo.services.NoteService
 import javax.validation.Valid
 
@@ -12,11 +13,12 @@ import javax.validation.Valid
 @RequestMapping("/api/notes")
 class NoteController(
     private val noteSevice: NoteService,
+    private val colorService: ColorService
 ) {
 
     @GetMapping
     fun getNotes(): ResponseEntity<List<NoteDto>> {
-        val noteDtos = noteSevice.getNotes().map { it.toNoteDto() }
+        val noteDtos = noteSevice.getNotes().map { it.toNoteDto(colorService.getColor(it.colorId)) }
         return ResponseEntity.ok(noteDtos)
     }
 
@@ -24,14 +26,16 @@ class NoteController(
     fun getNote(
         @PathVariable id: Long,
     ): ResponseEntity<NoteDto> {
-        return ResponseEntity.ok(noteSevice.getNote(id).toNoteDto())
+        val note = noteSevice.getNote(id)
+        return ResponseEntity.ok(note.toNoteDto(colorService.getColor(note.colorId)))
     }
 
     @PostMapping
     fun createNote(
         @Valid @RequestBody request: AddNoteRequest,
     ): ResponseEntity<NoteDto> {
-        return ResponseEntity.ok(noteSevice.createNote(request.toNote()).toNoteDto())
+        val note = noteSevice.createNote(request.toNote())
+        return ResponseEntity.ok(note.toNoteDto(colorService.getColor(note.colorId)))
     }
 
     @PutMapping("/{id}")
@@ -39,14 +43,17 @@ class NoteController(
         @PathVariable id: Long,
         @Valid @RequestBody request: UpdateNoteRequest,
     ): ResponseEntity<NoteDto> {
-        return ResponseEntity.ok(noteSevice.updateNote(id, request.toNote()).toNoteDto())
+        val note = noteSevice.updateNote(id, request.toNote())
+        println("add note ${note.content} ${note.colorId}")
+        return ResponseEntity.ok(note.toNoteDto(colorService.getColor(note.colorId)))
     }
 
     @DeleteMapping("/{id}")
-    fun  deleteNote(
+    fun deleteNote(
         @PathVariable id: Long,
     ): ResponseEntity<NoteDto> {
-        return ResponseEntity.ok(noteSevice.deleteNote(id).toNoteDto())
+        val note = noteSevice.deleteNote(id)
+        return ResponseEntity.ok(note.toNoteDto(colorService.getColor(note.colorId)))
     }
 
 }
