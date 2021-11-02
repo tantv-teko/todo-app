@@ -44,7 +44,6 @@ class NoteController(
         @Valid @RequestBody request: UpdateNoteRequest,
     ): ResponseEntity<NoteDto> {
         val note = noteSevice.updateNote(id, request.toNote())
-        println("add note ${note.content} ${note.colorId}")
         return ResponseEntity.ok(note.toNoteDto(colorService.getColor(note.colorId)))
     }
 
