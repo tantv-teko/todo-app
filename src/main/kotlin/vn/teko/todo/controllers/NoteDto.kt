@@ -21,20 +21,3 @@ fun Note.toNoteDto() = NoteDto(
         createAt = this.createAt,
         editedAt = this.editedAt,
 )
-
- /*
-fun  Note.toNoteDto() : NoteDto {
-    val colorSevice: ColorService
-    val color = colorSevice.getColor(2)
-    var noteDto = NoteDto(
-        id = this.id,
-        title = this.title,
-        content = this.content,
-        color = this.color,
-        createAt = this.createAt,
-        editedAt = this.editedAt,
-    )
-    return noteDto
-}
-
- */
