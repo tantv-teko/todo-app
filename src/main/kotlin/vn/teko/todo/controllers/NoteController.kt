@@ -18,7 +18,7 @@ class NoteController(
 
     @GetMapping
     fun getNotes(): ResponseEntity<List<NoteDto>> {
-        val noteDtos = noteSevice.getNotes().map { it.toNoteDto(colorService.getColor(it.colorId)) }
+        val noteDtos = noteSevice.getNotes().map { it.toNoteDto() }
         return ResponseEntity.ok(noteDtos)
     }
 
@@ -27,7 +27,7 @@ class NoteController(
         @PathVariable id: Long,
     ): ResponseEntity<NoteDto> {
         val note = noteSevice.getNote(id)
-        return ResponseEntity.ok(note.toNoteDto(colorService.getColor(note.colorId)))
+        return ResponseEntity.ok(note.toNoteDto())
     }
 
     @PostMapping
@@ -35,7 +35,7 @@ class NoteController(
         @Valid @RequestBody request: AddNoteRequest,
     ): ResponseEntity<NoteDto> {
         val note = noteSevice.createNote(request.toNote())
-        return ResponseEntity.ok(note.toNoteDto(colorService.getColor(note.colorId)))
+        return ResponseEntity.ok(note.toNoteDto())
     }
 
     @PutMapping("/{id}")
@@ -44,7 +44,7 @@ class NoteController(
         @Valid @RequestBody request: UpdateNoteRequest,
     ): ResponseEntity<NoteDto> {
         val note = noteSevice.updateNote(id, request.toNote())
-        return ResponseEntity.ok(note.toNoteDto(colorService.getColor(note.colorId)))
+        return ResponseEntity.ok(note.toNoteDto())
     }
 
     @DeleteMapping("/{id}")
@@ -52,7 +52,7 @@ class NoteController(
         @PathVariable id: Long,
     ): ResponseEntity<NoteDto> {
         val note = noteSevice.deleteNote(id)
-        return ResponseEntity.ok(note.toNoteDto(colorService.getColor(note.colorId)))
+        return ResponseEntity.ok(note.toNoteDto())
     }
 
 }

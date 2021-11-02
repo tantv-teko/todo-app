@@ -18,11 +18,12 @@ data class NoteModel(
     var editedAt: LocalDateTime,
 )
 
-fun NoteModel.toNote(colorId: Long): Note = Note(
+fun NoteModel.toNote(colorId: Long, color: Color): Note = Note(
     id = this.id,
     title = this.title,
     content = this.content,
     colorId = colorId,
+    color = color,
     createAt = this.createAt,
     editedAt = this.editedAt,
 )
