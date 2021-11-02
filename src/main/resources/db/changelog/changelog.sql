@@ -33,3 +33,20 @@ CREATE TABLE note_colors (
     FOREIGN KEY (note_id) REFERENCES notes(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+--changset chienv:7
+
+DROP TABLE IF EXISTS labels;
+CREATE TABLE labels (
+    id int primary key AUTO_INCREMENT,
+    name varchar(64)
+);
+
+DROP TABLE IF EXISTS note_labels;
+CREATE TABLE note_labels (
+    id int primary key AUTO_INCREMENT,
+    note_id int,
+    label_id int,
+    UNIQUE(label_id, note_id),
+    FOREIGN KEY (label_id) REFERENCES labels(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (note_id) REFERENCES notes(id)ON DELETE CASCADE ON UPDATE CASCADE
+);
