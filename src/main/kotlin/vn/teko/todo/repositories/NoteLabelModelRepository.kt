@@ -10,11 +10,6 @@ import javax.transaction.Transactional
 interface NoteLabelModelRepository: CrudRepository<NoteLabelModel, Long> {
     @Query("SELECT l FROM LabelModel l WHERE l.id IN (SELECT nl.labelId FROM NoteLabelModel nl WHERE nl.noteId = :noteId)")
     fun getLabelByNote(@Param("noteId")id: Long) : List<LabelModel>
-    fun findNoteLabelModelByNoteIdAndLabelId(noteId: Long, labelId: Long): NoteLabelModel
-    @Transactional
-    fun deleteNoteLabelModelByNoteIdAndLabelId(noteId: Long, labelId: Long)
     @Transactional
     fun deleteNoteLabelModelByNoteId(noteId: Long)
-    @Transactional
-    fun deleteNoteLabelModelByLabelId(labelId: Long)
 }
