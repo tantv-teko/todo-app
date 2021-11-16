@@ -7,7 +7,6 @@ import vn.teko.todo.repositories.*
 @Service
 class ColorServiceImpl(
     private val colorRepository: ColorRepository,
-    private val noteRepository: NoteRepository,
 ) : ColorService {
 
     override fun getColors(): List<Color> {
@@ -16,7 +15,7 @@ class ColorServiceImpl(
     }
 
     override fun getColor(id: Long): Color {
-        val optionalColorModel = colorRepository.findById(id).orElseThrow { NotFoundException(message = "not found noteId = $id ") }
+        val optionalColorModel = colorRepository.findById(id).orElseThrow { NotFoundException(message = "not found colorid = $id ") }
         return optionalColorModel.toColor()
     }
 
