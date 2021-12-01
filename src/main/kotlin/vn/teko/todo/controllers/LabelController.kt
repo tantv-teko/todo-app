@@ -21,7 +21,7 @@ class LabelController(
     }
 
     @GetMapping("/{id}")
-    fun getLabelById(
+    fun getLabels(
         @PathVariable id: Long,
     ): ResponseEntity<LabelDto> {
         return ResponseEntity.ok(labelService.getLabel(id).toLabelDto())
@@ -39,16 +39,14 @@ class LabelController(
         @PathVariable id: Long,
         @Valid @RequestBody request: UpdateLabelRequest,
     ): ResponseEntity<LabelDto> {
-        println("asdfasdfasd")
-        return  ResponseEntity.ok(labelService.updateLabel(id, request.toLabel()).toLabelDto())
+        return ResponseEntity.ok(labelService.updateLabel(id, request.toLabel()).toLabelDto())
     }
 
     @DeleteMapping("/{id}")
     fun  deleteLabel(
         @PathVariable id: Long,
-     ): ResponseEntity<LabelDto> {
+    ): ResponseEntity<LabelDto> {
         return ResponseEntity.ok(labelService.deleteLabel(id).toLabelDto())
     }
 
 }
-

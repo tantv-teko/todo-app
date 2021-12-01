@@ -1,28 +1,30 @@
 package vn.teko.todo.resquest
 
+import vn.teko.todo.services.Color
+import vn.teko.todo.services.Label
 import vn.teko.todo.services.Note
 import java.time.LocalDateTime
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size
 
 data class AddNoteRequest(
-    val id: Long,
     @Size(min = 8, max = 255)
     var title: String,
     @NotBlank
     var content: String,
-    val colorId: Long,
+    val colorId: Long?,
     val labelIds: List<Long> = listOf(),
-    val createAt: LocalDateTime = LocalDateTime.now(),
-    var editedAt: LocalDateTime = LocalDateTime.now(),
 )
 
 fun AddNoteRequest.toNote() = Note(
-    id = this.id,
+    id = 0,
     title = this.title,
     content = this.content,
-    colorId = this.colorId,
-    labelIds = this.labelIds,
-    createAt = this.createAt,
-    editedAt = this.editedAt,
+    color = if (colorId != null) Color(colorId, "11", "11") else Color(3, "222", "11"),
+    labels = this.labelIds.map { it -> Label(
+        id = it,
+        name = " ",
+    ) },
+    createAt = LocalDateTime.now(),
+    editedAt = LocalDateTime.now(),
 )

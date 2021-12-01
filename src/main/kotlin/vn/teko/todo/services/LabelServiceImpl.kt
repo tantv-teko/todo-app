@@ -5,8 +5,10 @@ import vn.teko.todo.exception.NotFoundException
 import vn.teko.todo.repositories.LabelRepository
 import vn.teko.todo.repositories.toLabel
 import vn.teko.todo.repositories.toLabelModel
+import javax.transaction.Transactional
 
 @Service
+@Transactional
 class LabelServiceImpl(
     private val labelRepositories: LabelRepository,
 ) : LabelService {
@@ -17,8 +19,9 @@ class LabelServiceImpl(
     }
 
     override fun getLabel(id: Long): Label {
-        val optionalLabelModel = labelRepositories.findById(id).orElseThrow { NotFoundException(message = "not found labelid = $id ") }
-        return optionalLabelModel.toLabel()
+        return labelRepositories.findById(id)
+                .orElseThrow { NotFoundException(message = "not found labelid = $id ") }
+                .toLabel()
     }
 
     override fun createLabel(label: Label): Label {
@@ -26,17 +29,19 @@ class LabelServiceImpl(
     }
 
     override fun updateLabel(id: Long, newLabel: Label): Label {
-        val optionalLabelModel = labelRepositories.findById(id).orElseThrow { NotFoundException(message = "not found labelid = $id ") }
-        val label = optionalLabelModel.toLabel().apply {
+        val labelModel = labelRepositories.findById(id)
+                .orElseThrow { NotFoundException(message = "not found labelid = $id ") }
+        val label = labelModel.toLabel().apply {
             name = newLabel.name
         }
         return labelRepositories.save(label.toLabelModel()).toLabel()
     }
 
     override fun deleteLabel(id: Long): Label {
-        val optionalLabelModel = labelRepositories.findById(id).orElseThrow { NotFoundException(message = "not found labelid = $id ") }
+        val labelModel = labelRepositories.findById(id)
+                .orElseThrow { NotFoundException(message = "not found labelid = $id ") }
         labelRepositories.deleteById(id)
-        return optionalLabelModel.toLabel()
+        return labelModel.toLabel()
     }
 }
 

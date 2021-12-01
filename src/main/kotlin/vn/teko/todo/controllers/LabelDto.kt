@@ -4,7 +4,7 @@ import vn.teko.todo.services.Label
 
 data class LabelDto(
     var id: Long,
-    var name: String?
+    var name: String,
 )
 
 fun Label.toLabelDto() : LabelDto = LabelDto(

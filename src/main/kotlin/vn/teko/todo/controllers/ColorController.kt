@@ -18,7 +18,7 @@ class ColorController(
     @GetMapping("/{id}")
     fun getColor(
         @PathVariable id: Long,
-        ): ResponseEntity<ColorDto> {
+    ): ResponseEntity<ColorDto> {
         return ResponseEntity.ok(colorService.getColor(id).toColorDto())
     }
 }

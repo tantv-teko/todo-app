@@ -42,8 +42,6 @@ class NoteController(
         return ResponseEntity.ok(noteSevice.updateNote(id, request.toNote()).toNoteDto())
     }
 
-
-
     @DeleteMapping("/{id}")
     fun  deleteNote(
         @PathVariable id: Long,
