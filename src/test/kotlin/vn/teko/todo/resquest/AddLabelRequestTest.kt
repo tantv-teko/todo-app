@@ -11,11 +11,10 @@ internal class AddLabelRequestTest {
     @Test
     fun toLabel() {
         val addLabelRequest = AddLabelRequest(
-            id = 0,
             name = "test"
         )
         val label = addLabelRequest.toLabel()
-        Assertions.assertThat(label.id).isEqualTo(addLabelRequest.id)
+        Assertions.assertThat(label.id).isEqualTo(0)
         Assertions.assertThat(label.name).isEqualTo(addLabelRequest.name)
     }
 }

@@ -3,8 +3,10 @@ package vn.teko.todo.services
 import org.springframework.stereotype.Service
 import vn.teko.todo.exception.NotFoundException
 import vn.teko.todo.repositories.*
+import javax.transaction.Transactional
 
 @Service
+@Transactional
 class ColorServiceImpl(
     private val colorRepository: ColorRepository,
 ) : ColorService {

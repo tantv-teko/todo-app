@@ -34,7 +34,6 @@ internal class LabelControllerTest {
     lateinit var objectMapper: ObjectMapper
 
     private val addRequest = AddLabelRequest(
-        id = 0,
         name = "test add label 1"
     )
     private val updateRequest = UpdateLabelRequest(

@@ -43,7 +43,7 @@ class LabelController(
     }
 
     @DeleteMapping("/{id}")
-    fun  deleteLabel(
+    fun deleteLabel(
         @PathVariable id: Long,
     ): ResponseEntity<LabelDto> {
         return ResponseEntity.ok(labelService.deleteLabel(id).toLabelDto())
