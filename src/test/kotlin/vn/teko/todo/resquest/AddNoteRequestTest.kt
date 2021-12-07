@@ -17,8 +17,8 @@ internal class AddNoteRequestTest {
         )
         val color1 = Color(
             id = 2,
-            name = "11",
-            code = "11",
+            name = " ",
+            code = " ",
         )
         val note = addNoteRequest.toNote()
         assertThat(note.title).isEqualTo(addNoteRequest.title)
@@ -32,8 +32,8 @@ internal class AddNoteRequestTest {
         )
         val color2 = Color(
             id = 3,
-            name = "222",
-            code = "11",
+            name = " ",
+            code = " ",
         )
         val note2 = addNoteRequest2.toNote()
         assertThat(note2.title).isEqualTo(addNoteRequest2.title)

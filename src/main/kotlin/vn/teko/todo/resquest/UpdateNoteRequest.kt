@@ -25,8 +25,8 @@ fun UpdateNoteRequest.toNote() = Note(
     content = this.content,
     color = Color(
             id = colorId,
-            name = "11",
-            code = "1111",
+            name = " ",
+            code = " ",
     ),
     labels = this.labelIds.map { it -> Label(
         id = it,

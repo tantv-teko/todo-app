@@ -18,8 +18,8 @@ internal class UpdateNoteRequestTest {
         )
         val color = Color(
             id = updateLabelRequest.colorId,
-            name = "11",
-            code = "1111",
+            name = " ",
+            code = " ",
         )
         val note = updateLabelRequest.toNote()
         assertThat(note.id).isEqualTo(updateLabelRequest.id)
