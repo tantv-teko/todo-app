@@ -105,7 +105,7 @@ internal class NoteControllerTest {
 
 
     @Test
-    fun getnoteById() {
+    fun getNote() {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/notes/1").contentType(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andExpect(MockMvcResultMatchers.jsonPath("$.title").value(noteService.getNote(1).title))
