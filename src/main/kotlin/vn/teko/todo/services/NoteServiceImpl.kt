@@ -36,15 +36,19 @@ class NoteServiceImpl(
     }
 
     override fun createNote(addNote: Note): Note {
-        addNote.color = colorRepository.findById(addNote.color.id)
+        if (addNote.color.id == 0L) {
+            addNote.color = colorRepository.findByDefault().toColor()
+        }
+        else {
+            addNote.color = colorRepository.findById(addNote.color.id)
                 .orElseThrow { NotFoundException(message = "not found colorid = ${addNote.color.id} ") }
                 .toColor()
+        }
         addNote.labels.forEach {
             labelRepository.findById(it.id)
-                    .orElseThrow { NotFoundException(message = "not found labelid = ${it.id} ") }
-                    .toLabel()
+                .orElseThrow { NotFoundException(message = "not found labelid = ${it.id} ") }
+                .toLabel()
         }
-
         val note = noteRepository.save(addNote.toNoteModel()).toNote(addNote.color)
 
         noteColorRepository.save(NoteColorModel(

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface ColorRepository: CrudRepository<ColorModel, Long> {
+    @Query("SELECT c FROM ColorModel c WHERE c.isDefault = true")
+    fun findByDefault() : ColorModel
     @Query("SELECT c FROM ColorModel c where  c.id IN (SELECT n.colorId FROM NoteColorModel n WHERE n.noteId = :noteId)")
     fun findByNoteId(@Param("noteId") noteId: Long) : ColorModel
 }

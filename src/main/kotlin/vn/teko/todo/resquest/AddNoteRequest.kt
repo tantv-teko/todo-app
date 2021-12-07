@@ -22,7 +22,7 @@ fun AddNoteRequest.toNote() = Note(
     id = 0,
     title = this.title,
     content = this.content,
-    color = if (colorId != null) Color(colorId, " ", " ") else Color(3, " ", " "),
+    color = if (colorId != null) Color(colorId, " ", " ") else Color(0, " ", " "),
     labels = this.labelIds.map { it -> Label(
         id = it,
         name = " ",

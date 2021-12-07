@@ -98,5 +98,11 @@ internal class ColorRepositoryTest {
         val colorInNote = colorRepository.findByNoteId(note.id)
         assertThat(colorInNote).isEqualTo(color)
     }
+
+    @Test
+    fun findByDefault() {
+        val color = colorRepository.findByDefault()
+        assertThat(color.isDefault).isEqualTo(true)
+    }
 }
 

@@ -31,7 +31,7 @@ internal class AddNoteRequestTest {
             colorId = null,
         )
         val color2 = Color(
-            id = 3,
+            id = 0,
             name = " ",
             code = " ",
         )
