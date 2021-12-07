@@ -1,9 +1,9 @@
 package vn.teko.todo.services
 
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import vn.teko.todo.exception.NotFoundException
 import vn.teko.todo.repositories.*
-import javax.transaction.Transactional
 
 @Service
 @Transactional
