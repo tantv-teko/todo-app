@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.BDDMockito.given
+import org.mockito.Mock
 import org.mockito.Mockito
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.junit.jupiter.SpringExtension
@@ -17,15 +18,15 @@ import java.util.*
 internal class NoteServiceTest {
 
     lateinit var noteService: NoteService
-    @MockBean
+    @Mock
     private lateinit var noteRepository: NoteRepository
-    @MockBean
+    @Mock
     private lateinit var noteColorRepository: NoteColorRepository
-    @MockBean
+    @Mock
     private lateinit var colorRepository: ColorRepository
-    @MockBean
-    private lateinit var noteLabelModelRepository: NoteLabelRepository
-    @MockBean
+    @Mock
+    private lateinit var noteLabelRepository: NoteLabelRepository
+    @Mock
     private lateinit var labelRepository: LabelRepository
 
     private val label1 = Label(
@@ -46,7 +47,6 @@ internal class NoteServiceTest {
         id = 0,
         title = "add note",
         content = "ssss",
-        colorId = 1,
         color = color1,
         createAt = LocalDateTime.now(),
         editedAt = LocalDateTime.now(),
@@ -55,7 +55,6 @@ internal class NoteServiceTest {
         id = 1,
         title = "update note",
         content = "ssss",
-        colorId = 1,
         color = color1,
         createAt = LocalDateTime.now(),
         editedAt = LocalDateTime.now(),
@@ -68,7 +67,7 @@ internal class NoteServiceTest {
             noteRepository = noteRepository,
             noteColorRepository = noteColorRepository,
             colorRepository = colorRepository,
-            noteLabelModelRepository = noteLabelModelRepository,
+            noteLabelRepository = noteLabelRepository,
             labelRepository = labelRepository
         )
         val note1 = NoteModel(
@@ -115,21 +114,21 @@ internal class NoteServiceTest {
                 editedAt = LocalDateTime.now(),
             )
         )
-        Mockito.doNothing().`when`(labelRepository).deleteById(3)
 
         given(colorRepository.findById(1)).willReturn(Optional.of(color1.toColorModel()))
-
-        given(labelRepository.findById(1)).willReturn(Optional.of(label1.toLabelModel()))
-        given(labelRepository.findById(2)).willReturn(Optional.of(label2.toLabelModel()))
+        given(colorRepository.findByNoteId(1)).willReturn(color1.toColorModel())
+        given(colorRepository.findByNoteId(2)).willReturn(color1.toColorModel())
+        given(colorRepository.findByNoteId(3)).willReturn(color1.toColorModel())
+        given(colorRepository.findByNoteId(4)).willReturn(color1.toColorModel())
 
         Mockito.doNothing().`when`(noteColorRepository).deleteByNoteId(3)
 
-        given(noteColorRepository.getNoteColor(1)).willReturn(1)
-        given(noteColorRepository.getNoteColor(2)).willReturn(1)
-        given(noteColorRepository.getNoteColor(3)).willReturn(1)
-        given(noteLabelModelRepository.getLabelByNote(1)).willReturn(listOf<Label>(label1, label2).map { it.toLabelModel() })
-        given(noteLabelModelRepository.getLabelByNote(2)).willReturn(listOf<Label>(label1).map { it.toLabelModel() })
-        given(noteLabelModelRepository.getLabelByNote(3)).willReturn(listOf<Label>(label2).map { it.toLabelModel() })
+        given(labelRepository.findById(1)).willReturn(Optional.of(label1.toLabelModel()))
+        given(labelRepository.findById(2)).willReturn(Optional.of(label2.toLabelModel()))
+        given(labelRepository.findByNoteId(1)).willReturn(listOf<Label>(label1, label2).map { it.toLabelModel() })
+        given(labelRepository.findByNoteId(2)).willReturn(listOf<Label>(label1).map { it.toLabelModel() })
+        given(labelRepository.findByNoteId(3)).willReturn(listOf<Label>(label2).map { it.toLabelModel() })
+        Mockito.doNothing().`when`(labelRepository).deleteById(3)
     }
 
     @Test
@@ -147,7 +146,7 @@ internal class NoteServiceTest {
         val note = noteService.getNote(1)
         assertThat(note.color).isEqualTo(color1)
         assertThat(note.id).isEqualTo(1)
-        Mockito.verify(noteLabelModelRepository).getLabelByNote(1)
+        Mockito.verify(labelRepository).findByNoteId(1)
     }
 
     @Test
@@ -170,7 +169,6 @@ internal class NoteServiceTest {
     @Test
     fun deleteNote() {
         noteService.deleteNote(3)
-        Mockito.verify(noteRepository).findById(3)
         Mockito.verify(noteRepository).deleteById(3)
     }
 }

@@ -34,7 +34,6 @@ internal class NoteControllerTest {
     lateinit var objectMapper: ObjectMapper
 
     private val addRequest = AddNoteRequest(
-        id = 0,
         title = "add note",
         content = "ssss",
         colorId =  1,
@@ -53,7 +52,6 @@ internal class NoteControllerTest {
             id = 1,
             title = "111",
             content = "note 1",
-            colorId = 1,
             createAt = LocalDateTime.now(),
             editedAt = LocalDateTime.now(),
         )
@@ -61,7 +59,6 @@ internal class NoteControllerTest {
             id = 2,
             title = "222",
             content = "note 2",
-            colorId = 1,
             createAt = LocalDateTime.now(),
             editedAt = LocalDateTime.now(),
         )
@@ -69,7 +66,6 @@ internal class NoteControllerTest {
             id = 3,
             title = "333",
             content = "note 3",
-            colorId = 1,
             createAt = LocalDateTime.now(),
             editedAt = LocalDateTime.now(),
         )
@@ -82,7 +78,6 @@ internal class NoteControllerTest {
                 id = 4,
                 title = "add note",
                 content = "ssss",
-                colorId =  1,
                 createAt = LocalDateTime.now(),
                 editedAt = LocalDateTime.now(),
             )
@@ -92,7 +87,6 @@ internal class NoteControllerTest {
                 id = 1,
                 title = "update note",
                 content = "ssss",
-                colorId =  1,
                 createAt = note1.createAt,
                 editedAt = LocalDateTime.now(),
             )
@@ -127,11 +121,12 @@ internal class NoteControllerTest {
     @Test
     fun createnote() {
         val requestJson = objectMapper.writeValueAsString(addRequest)
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/notes").contentType(MediaType.APPLICATION_JSON).content(requestJson))
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/notes")
+            .contentType(MediaType.APPLICATION_JSON).content(requestJson))
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andReturn()
-        Mockito.verify(noteService).createNote(addRequest.toNote())
 
+        Mockito.verify(noteService).createNote(addRequest.toNote())
     }
 
     @Test

@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity
 import vn.teko.todo.resquest.AddNoteRequest
 import vn.teko.todo.resquest.UpdateNoteRequest
 import vn.teko.todo.resquest.toNote
+import vn.teko.todo.services.Color
 import vn.teko.todo.services.NoteService
 import javax.validation.Valid
 

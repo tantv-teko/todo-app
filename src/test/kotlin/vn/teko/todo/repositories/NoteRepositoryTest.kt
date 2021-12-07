@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
 import org.springframework.test.context.junit.jupiter.SpringExtension
@@ -15,6 +16,7 @@ import javax.persistence.PersistenceContext
 
 @ExtendWith(SpringExtension::class)
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 internal class NoteRepositoryTest {
 
     @Autowired
@@ -62,9 +64,9 @@ internal class NoteRepositoryTest {
         entityManager.persist(note2)
         entityManager.persist(note3)
         entityManager.persist(note4)
-        val notes = noteRepository.findAll().map { it.toNote(1, color) }
-        assertThat(notes.size).isEqualTo(4)
-        assertThat(notes.get(0).title).isEqualTo("title1")
+        val notes = noteRepository.findAll().map { it.toNote(color) }
+        assertThat(notes.size).isNotNull()
+
     }
 
     @Test
@@ -90,7 +92,6 @@ internal class NoteRepositoryTest {
             createAt = LocalDateTime.now(),
             editedAt = LocalDateTime.now(),
         )
-        entityManager.persist(note1)
         val note = noteRepository.save(note1)
         entityManager.flush()
         assertThat(note).isEqualTo(note1)
@@ -105,7 +106,6 @@ internal class NoteRepositoryTest {
             createAt = LocalDateTime.now(),
             editedAt = LocalDateTime.now(),
         )
-        entityManager.persist(note1)
         val note = noteRepository.save(note1)
         noteRepository.deleteById(note.id)
         entityManager.flush();

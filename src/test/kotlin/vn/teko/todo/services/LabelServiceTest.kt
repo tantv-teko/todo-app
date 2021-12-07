@@ -6,8 +6,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.BDDMockito.*
+import org.mockito.Mock
 import org.mockito.Mockito
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import vn.teko.todo.repositories.LabelModel
 import vn.teko.todo.repositories.LabelRepository
@@ -20,7 +20,7 @@ internal class LabelServiceTest {
 
     lateinit var labelService: LabelService
 
-    @MockBean
+    @Mock
     private lateinit var labelRepository: LabelRepository
 
     private val addLabel = LabelModel(

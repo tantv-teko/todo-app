@@ -63,6 +63,7 @@ internal class ColorControllerTest {
         val colorsJSON = objectMapper.writeValueAsString(colors.map { it.toColorDto() })
         given(colorService.getColors()).willReturn(colors)
         mockMvc.perform(get("/api/colors").contentType(MediaType.APPLICATION_JSON))
+            .andExpect(MockMvcResultMatchers.status().isOk)
             .andExpect(MockMvcResultMatchers.content().json(colorsJSON))
             .andReturn()
     }

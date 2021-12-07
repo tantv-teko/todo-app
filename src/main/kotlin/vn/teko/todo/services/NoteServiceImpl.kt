@@ -12,7 +12,7 @@ class NoteServiceImpl(
     private val noteRepository: NoteRepository,
     private val noteColorRepository: NoteColorRepository,
     private val colorRepository: ColorRepository,
-    private val noteLabelModelRepository: NoteLabelRepository,
+    private val noteLabelRepository: NoteLabelRepository,
     private val labelRepository: LabelRepository,
 ) : NoteService {
 
@@ -20,7 +20,7 @@ class NoteServiceImpl(
         val noteModels = noteRepository.findAll()
         val notes = noteRepository.findAll().map { it.toNote(colorRepository.findByNoteId(it.id).toColor()) }
         notes.map {
-            it.labels = noteLabelModelRepository.getLabelByNote(it.id).map { it.toLabel() }
+            it.labels = labelRepository.findByNoteId(it.id).map { it.toLabel() }
         }
         return notes
     }
@@ -30,17 +30,9 @@ class NoteServiceImpl(
                 .orElseThrow { NotFoundException(message = "not found noteId = $id ") }
         val note = noteModel.toNote(colorRepository.findByNoteId(noteModel.id).toColor())
         note.apply {
-            labels = noteLabelModelRepository.getLabelByNote(note.id).map { it.toLabel() }
+            labels = labelRepository.findByNoteId(note.id).map { it.toLabel() }
         }
         return note
-    }
-
-    fun addLabelToNote(noteId: Long, labelId: Long) {
-        if (labelRepository.findById(labelId).isPresent() == false)  return
-        noteLabelModelRepository.save(NoteLabelModel(
-            noteId = noteId,
-            labelId = labelId,
-        ))
     }
 
     override fun createNote(addNote: Note): Note {
@@ -54,6 +46,7 @@ class NoteServiceImpl(
         }
 
         val note = noteRepository.save(addNote.toNoteModel()).toNote(addNote.color)
+
         noteColorRepository.save(NoteColorModel(
                 noteId = note.id,
                 colorId = note.color.id
@@ -62,29 +55,32 @@ class NoteServiceImpl(
             color = colorRepository.findByNoteId(note.id).toColor()
             labels = addNote.labels
         }
+
         note.labels.forEach {
-            this.addLabelToNote(note.id, it.id)
+            noteLabelRepository.save(NoteLabelModel(
+                noteId = note.id,
+                labelId = it.id,
+            ))
         }
         note.apply {
-            labels = noteLabelModelRepository.getLabelByNote(note.id).map { it.toLabel() }
+            labels = labelRepository.findByNoteId(note.id).map { it.toLabel() }
         }
+
         return note
     }
 
 
     override fun updateNote(id: Long, newNote: Note): Note {
         var note = this.getNote(id)
-
         note.apply {
             this.title = newNote.title
             this.content = newNote.content
-            this.color = colorRepository.findById(id)
+            this.color = colorRepository.findById(newNote.color.id)
                     .orElseThrow { NotFoundException(message = "not found colorid = $id ") }
                     .toColor()
             this.labels = newNote.labels
             this.editedAt = LocalDateTime.now()
         }
-
         noteColorRepository.deleteByNoteId(note.id)
         noteColorRepository.save(NoteColorModel(
             noteId = note.id,
@@ -92,12 +88,15 @@ class NoteServiceImpl(
         ))
 
         noteRepository.save(note.toNoteModel())
-        noteLabelModelRepository.deleteNoteLabelModelByNoteId(note.id)
+        noteLabelRepository.deleteNoteLabelModelByNoteId(note.id)
         note.labels.forEach {
-            this.addLabelToNote(note.id, it.id)
+            noteLabelRepository.save(NoteLabelModel(
+                noteId = note.id,
+                labelId = it.id,
+            ))
         }
         note.apply {
-            labels = noteLabelModelRepository.getLabelByNote(note.id).map { it.toLabel() }
+            labels = labelRepository.findByNoteId(note.id).map { it.toLabel() }
         }
 
         return note

@@ -8,7 +8,5 @@ import javax.transaction.Transactional
 
 @Repository
 interface NoteLabelRepository: CrudRepository<NoteLabelModel, Long> {
-    @Query("SELECT l FROM LabelModel l WHERE l.id IN (SELECT nl.labelId FROM NoteLabelModel nl WHERE nl.noteId = :noteId)")
-    fun getLabelByNote(@Param("noteId")id: Long) : List<LabelModel>
     fun deleteNoteLabelModelByNoteId(noteId: Long)
 }

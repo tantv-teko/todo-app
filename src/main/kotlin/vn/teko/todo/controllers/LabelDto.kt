@@ -10,5 +10,4 @@ data class LabelDto(
 fun Label.toLabelDto() : LabelDto = LabelDto(
     id = this.id,
     name = this.name,
-
 )

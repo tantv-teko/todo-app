@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mockito
 import org.mockito.BDDMockito.given
+import org.mockito.Mock
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import vn.teko.todo.repositories.ColorModel
@@ -19,7 +20,7 @@ internal class ColorServiceTest {
 
     lateinit var colorService: ColorService
 
-    @MockBean
+    @Mock
     private lateinit var colorRepository: ColorRepository
 
     @BeforeEach

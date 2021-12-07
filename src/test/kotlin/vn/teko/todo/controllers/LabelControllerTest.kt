@@ -1,7 +1,6 @@
 package vn.teko.todo.controllers
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.mockk.verify
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
