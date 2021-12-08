@@ -1,13 +1,14 @@
 package vn.teko.todo.services
 
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import vn.teko.todo.exception.NotFoundException
 import vn.teko.todo.repositories.*
 
 @Service
+@Transactional
 class ColorServiceImpl(
     private val colorRepository: ColorRepository,
-    private val noteRepository: NoteRepository,
 ) : ColorService {
 
     override fun getColors(): List<Color> {
@@ -16,8 +17,9 @@ class ColorServiceImpl(
     }
 
     override fun getColor(id: Long): Color {
-        val optionalColorModel = colorRepository.findById(id).orElseThrow { NotFoundException(message = "not found noteId = $id ") }
-        return optionalColorModel.toColor()
+        return colorRepository.findById(id)
+                .orElseThrow { NotFoundException(message = "not found colorid = $id ") }
+                .toColor()
     }
 
 }

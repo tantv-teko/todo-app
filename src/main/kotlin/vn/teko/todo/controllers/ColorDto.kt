@@ -10,14 +10,6 @@ data class ColorDto(
     var isDefault: Boolean = false,
 )
 
-fun ColorDto.toColor(): Color = Color(
-    id = this.id,
-    name = this.name,
-    code = this.code,
-    isDefault = this.isDefault,
-)
-
-
 fun Color.toColorDto(): ColorDto = ColorDto(
     id = this.id,
     name = this.name,

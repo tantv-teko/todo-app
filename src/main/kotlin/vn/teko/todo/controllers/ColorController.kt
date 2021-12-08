@@ -9,11 +9,16 @@ import vn.teko.todo.services.ColorService
 class ColorController(
     private val colorService: ColorService,
 ) {
-
     @GetMapping
     fun getColors(): ResponseEntity<List<ColorDto>> {
         val colorDtos = colorService.getColors().map { it.toColorDto() }
         return ResponseEntity.ok(colorDtos)
     }
 
+    @GetMapping("/{id}")
+    fun getColor(
+        @PathVariable id: Long,
+    ): ResponseEntity<ColorDto> {
+        return ResponseEntity.ok(colorService.getColor(id).toColorDto())
+    }
 }
