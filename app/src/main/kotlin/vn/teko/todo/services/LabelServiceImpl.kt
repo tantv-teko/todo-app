@@ -14,6 +14,7 @@ class LabelServiceImpl(
 ) : LabelService {
 
     override fun getLabels(): List<Label> {
+        println("sfsfsfsfsfsfs")
         val labels = labelRepositories.findAll().map { it.toLabel() }
         return labels
     }

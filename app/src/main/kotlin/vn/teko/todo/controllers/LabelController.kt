@@ -6,6 +6,7 @@ import vn.teko.todo.services.LabelService
 import vn.teko.todo.resquest.AddLabelRequest
 import vn.teko.todo.resquest.UpdateLabelRequest
 import vn.teko.todo.resquest.toLabel
+
 import javax.validation.Valid
 
 @RestController
