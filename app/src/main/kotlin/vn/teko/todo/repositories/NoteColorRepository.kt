@@ -1,15 +1,15 @@
 package vn.teko.todo.repositories
 
-import org.springframework.data.jpa.repository.Modifying
-import org.springframework.data.jpa.repository.Query
-import org.springframework.data.repository.CrudRepository
+
+import org.springframework.data.r2dbc.repository.Modifying
+import org.springframework.data.r2dbc.repository.Query
+import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
-import javax.transaction.Transactional
 
 @Repository
-interface NoteColorRepository:  CrudRepository<NoteColorModel, Long> {
+interface NoteColorRepository: CoroutineCrudRepository<NoteColorModel, Long> {
     @Modifying
-    @Query("DELETE FROM NoteColorModel n WHERE n.noteId = :noteId")
-    fun deleteByNoteId(@Param("noteId")id: Long)
+    @Query("DELETE FROM note_colors n WHERE n.note_id = :noteId")
+    suspend fun deleteByNoteId(@Param("noteId")id: Long)
 }

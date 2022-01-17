@@ -16,27 +16,27 @@ class NoteController(
 ) {
 
     @GetMapping
-    fun getNotes(): ResponseEntity<List<NoteDto>> {
+    suspend fun getNotes(): ResponseEntity<List<NoteDto>> {
         val noteDtos = noteSevice.getNotes().map { it.toNoteDto() }
         return ResponseEntity.ok(noteDtos)
     }
 
     @GetMapping("/{id}")
-    fun getNote(
+    suspend fun getNote(
         @PathVariable id: Long,
     ): ResponseEntity<NoteDto> {
         return ResponseEntity.ok(noteSevice.getNote(id).toNoteDto())
     }
 
     @PostMapping
-    fun createNote(
+    suspend fun createNote(
         @Valid @RequestBody request: AddNoteRequest,
     ): ResponseEntity<NoteDto> {
         return ResponseEntity.ok(noteSevice.createNote(request.toNote()).toNoteDto())
     }
 
     @PutMapping("/{id}")
-    fun updateNote(
+    suspend fun updateNote(
         @PathVariable id: Long,
         @Valid @RequestBody request: UpdateNoteRequest,
     ): ResponseEntity<NoteDto> {
@@ -44,7 +44,7 @@ class NoteController(
     }
 
     @DeleteMapping("/{id}")
-    fun  deleteNote(
+    suspend fun deleteNote(
         @PathVariable id: Long,
     ): ResponseEntity<NoteDto> {
         return ResponseEntity.ok(noteSevice.deleteNote(id).toNoteDto())

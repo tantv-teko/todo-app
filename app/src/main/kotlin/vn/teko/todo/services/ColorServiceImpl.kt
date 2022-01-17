@@ -1,5 +1,6 @@
 package vn.teko.todo.services
 
+import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import vn.teko.todo.exception.NotFoundException
@@ -11,15 +12,14 @@ class ColorServiceImpl(
     private val colorRepository: ColorRepository,
 ) : ColorService {
 
-    override fun getColors(): List<Color> {
-        val colors = colorRepository.findAll().map { it.toColor() }
+    override suspend fun getColors(): List<Color> {
+        val colors = colorRepository.findAll().toList().map { it.toColor() }
         return colors
     }
 
-    override fun getColor(id: Long): Color {
-        return colorRepository.findById(id)
-                .orElseThrow { NotFoundException(message = "not found colorid = $id ") }
-                .toColor()
+    override suspend fun getColor(id: Long): Color {
+        val colorModel = colorRepository.findById(id) ?: throw NotFoundException(message = "not found colorid = $id ")
+        return colorModel.toColor()
     }
 
 }

@@ -1,5 +1,6 @@
 package vn.teko.todo.services
 
+import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import vn.teko.todo.exception.NotFoundException
@@ -16,18 +17,16 @@ class NoteServiceImpl(
     private val labelRepository: LabelRepository,
 ) : NoteService {
 
-    override fun getNotes(): List<Note> {
-        val noteModels = noteRepository.findAll()
-        val notes = noteRepository.findAll().map { it.toNote(colorRepository.findByNoteId(it.id).toColor()) }
+    override suspend fun getNotes(): List<Note> {
+        val notes = noteRepository.findAll().toList().map { it.toNote(colorRepository.findByNoteId(it.id).toColor()) }
         notes.map {
             it.labels = labelRepository.findByNoteId(it.id).map { it.toLabel() }
         }
         return notes
     }
 
-    override fun getNote(id: Long): Note {
-        val noteModel = noteRepository.findById(id)
-                .orElseThrow { NotFoundException(message = "not found noteId = $id ") }
+    override suspend fun getNote(id: Long): Note {
+        val noteModel = noteRepository.findById(id) ?: throw NotFoundException(message = "not found noteId = $id ")
         val note = noteModel.toNote(colorRepository.findByNoteId(noteModel.id).toColor())
         note.apply {
             labels = labelRepository.findByNoteId(note.id).map { it.toLabel() }
@@ -35,19 +34,17 @@ class NoteServiceImpl(
         return note
     }
 
-    override fun createNote(addNote: Note): Note {
+    override suspend fun createNote(addNote: Note): Note {
         if (addNote.color.id == 0L) {
             addNote.color = colorRepository.findByDefault().toColor()
         }
         else {
-            addNote.color = colorRepository.findById(addNote.color.id)
-                .orElseThrow { NotFoundException(message = "not found colorid = ${addNote.color.id} ") }
-                .toColor()
+            val colorModel = colorRepository.findById(addNote.color.id) ?: throw NotFoundException(message = "not found colorid = ${addNote.color.id} ")
+            addNote.color = colorModel.toColor()
         }
         addNote.labels.forEach {
-            labelRepository.findById(it.id)
-                .orElseThrow { NotFoundException(message = "not found labelid = ${it.id} ") }
-                .toLabel()
+            val label = labelRepository.findById(it.id) ?: throw NotFoundException(message = "not found labelid = ${it.id} ")
+            label.toLabel()
         }
         val note = noteRepository.save(addNote.toNoteModel()).toNote(addNote.color)
 
@@ -74,14 +71,13 @@ class NoteServiceImpl(
     }
 
 
-    override fun updateNote(id: Long, newNote: Note): Note {
+    override suspend fun updateNote(id: Long, newNote: Note): Note {
         var note = this.getNote(id)
+        val colorModel = colorRepository.findById(newNote.color.id) ?: throw NotFoundException(message = "not found colorid = $id ")
         note.apply {
             this.title = newNote.title
             this.content = newNote.content
-            this.color = colorRepository.findById(newNote.color.id)
-                    .orElseThrow { NotFoundException(message = "not found colorid = $id ") }
-                    .toColor()
+            this.color = colorModel.toColor()
             this.labels = newNote.labels
             this.editedAt = LocalDateTime.now()
         }
@@ -106,9 +102,7 @@ class NoteServiceImpl(
         return note
     }
 
-    override fun deleteNote(id: Long): Note {
-        val noteModel = noteRepository.findById(id)
-                .orElseThrow { NotFoundException(message = "not found noteId = $id ") }
+    override suspend fun deleteNote(id: Long): Note {
         var note = this.getNote(id)
         noteRepository.deleteById(id)
         return note

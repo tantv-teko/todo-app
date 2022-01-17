@@ -1,20 +1,21 @@
 package vn.teko.todo.repositories
 
+import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.Column
+import org.springframework.data.relational.core.mapping.Table
 import vn.teko.todo.services.Color
 import vn.teko.todo.services.Note
 import java.time.LocalDateTime
-import javax.persistence.*
 
-@Entity
-@Table(name = "notes")
+@Table("notes")
 data class NoteModel(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     val id: Long,
     val title: String,
     val content: String,
-    @Column(name = "create_at")
+    @Column("create_at")
     val createAt: LocalDateTime,
-    @Column(name = "edited_at")
+    @Column("edited_at")
     var editedAt: LocalDateTime,
 )
 

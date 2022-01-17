@@ -6,7 +6,6 @@ import vn.teko.todo.services.LabelService
 import vn.teko.todo.resquest.AddLabelRequest
 import vn.teko.todo.resquest.UpdateLabelRequest
 import vn.teko.todo.resquest.toLabel
-
 import javax.validation.Valid
 
 @RestController
@@ -16,27 +15,27 @@ class LabelController(
 ) {
 
     @GetMapping
-    fun getLabels(): ResponseEntity<List<LabelDto>> {
+    suspend fun getLabels(): ResponseEntity<List<LabelDto>> {
         val labelDtos = labelService.getLabels().map { it.toLabelDto() }
         return ResponseEntity.ok(labelDtos)
     }
 
     @GetMapping("/{id}")
-    fun getLabels(
+    suspend fun getLabels(
         @PathVariable id: Long,
     ): ResponseEntity<LabelDto> {
         return ResponseEntity.ok(labelService.getLabel(id).toLabelDto())
     }
 
     @PostMapping
-    fun createLabel(
+    suspend fun createLabel(
         @Valid @RequestBody request: AddLabelRequest,
     ): ResponseEntity<LabelDto> {
         return ResponseEntity.ok(labelService.createLabel(request.toLabel()).toLabelDto())
     }
 
     @PutMapping("/{id}")
-    fun updateLabel(
+    suspend fun updateLabel(
         @PathVariable id: Long,
         @Valid @RequestBody request: UpdateLabelRequest,
     ): ResponseEntity<LabelDto> {
@@ -44,7 +43,7 @@ class LabelController(
     }
 
     @DeleteMapping("/{id}")
-    fun deleteLabel(
+    suspend fun deleteLabel(
         @PathVariable id: Long,
     ): ResponseEntity<LabelDto> {
         return ResponseEntity.ok(labelService.deleteLabel(id).toLabelDto())

@@ -1,10 +1,10 @@
 package vn.teko.todo.services
 
 interface LabelService {
-    fun getLabels() : List<Label>
-    fun getLabel(id: Long) : Label
-    fun createLabel(label: Label) : Label
-    fun updateLabel(id: Long, newLabel: Label) : Label
-    fun deleteLabel(id: Long) : Label
+    suspend fun getLabels() : List<Label>
+    suspend fun getLabel(id: Long) : Label
+    suspend fun createLabel(label: Label) : Label
+    suspend fun updateLabel(id: Long, newLabel: Label) : Label
+    suspend fun deleteLabel(id: Long) : Label
 }
 

@@ -1,17 +1,18 @@
 package vn.teko.todo.repositories
 
+import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.Column
+import org.springframework.data.relational.core.mapping.Table
 import vn.teko.todo.services.Color
 import vn.teko.todo.services.Note
-import javax.persistence.*
 
-@Entity
-@Table(name = "colors")
+@Table("colors")
 data class ColorModel(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     val id: Long,
     val name: String,
     val code: String,
-    @Column(name = "is_default")
+    @Column("is_default")
     var isDefault: Boolean = false,
 )
 

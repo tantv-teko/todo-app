@@ -1,12 +1,12 @@
 package vn.teko.todo.repositories
 
+import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.Table
 import vn.teko.todo.services.Label
-import javax.persistence.*
 
-@Entity
-@Table(name = "labels")
+@Table("labels")
 data class LabelModel(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     val id: Long,
     var name: String,
 )

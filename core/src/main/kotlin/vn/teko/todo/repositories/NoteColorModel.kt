@@ -1,14 +1,16 @@
 package vn.teko.todo.repositories
 
-import javax.persistence.*
+import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.Column
+import org.springframework.data.relational.core.mapping.Table
 
-@Entity
-@Table(name = "note_colors")
+
+@Table("note_colors")
 data class NoteColorModel(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     val id: Long = 0,
-    @Column(name = "note_id")
+    @Column("note_id")
     val noteId: Long,
-    @Column(name = "color_id")
+    @Column("color_id")
     val colorId: Long,
 )
