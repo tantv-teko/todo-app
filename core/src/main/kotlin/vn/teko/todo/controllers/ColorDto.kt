@@ -1,6 +1,5 @@
 package vn.teko.todo.controllers
 
-import vn.teko.todo.repositories.ColorModel
 import vn.teko.todo.services.Color
 
 data class ColorDto(

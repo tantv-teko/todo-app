@@ -28,4 +28,3 @@ dependencies {
     testImplementation("org.testcontainers:mysql:1.16.2")
     testImplementation("io.projectreactor:reactor-test")
 }
-

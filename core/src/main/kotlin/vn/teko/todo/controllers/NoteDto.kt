@@ -1,7 +1,6 @@
 package vn.teko.todo.controllers
 
 import vn.teko.todo.services.Color
-import vn.teko.todo.services.ColorService
 import vn.teko.todo.services.Label
 import vn.teko.todo.services.Note
 import java.time.LocalDateTime

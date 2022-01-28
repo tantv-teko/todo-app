@@ -3,7 +3,6 @@ package vn.teko.todo.resquest
 import vn.teko.todo.services.Color
 import vn.teko.todo.services.Label
 import vn.teko.todo.services.Note
-import java.net.IDN
 import java.time.LocalDateTime
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size

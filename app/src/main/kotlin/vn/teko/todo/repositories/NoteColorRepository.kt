@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface NoteColorRepository: CoroutineCrudRepository<NoteColorModel, Long> {
     @Modifying
-    @Query("DELETE FROM note_colors n WHERE n.note_id = :noteId")
+    @Query("DELETE FROM note_colors WHERE note_colors.note_id = :noteId")
     suspend fun deleteByNoteId(@Param("noteId")id: Long)
 }

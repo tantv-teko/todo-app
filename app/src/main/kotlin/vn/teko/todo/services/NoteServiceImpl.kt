@@ -72,7 +72,7 @@ class NoteServiceImpl(
 
 
     override suspend fun updateNote(id: Long, newNote: Note): Note {
-        var note = this.getNote(id)
+        val note = this.getNote(id)
         val colorModel = colorRepository.findById(newNote.color.id) ?: throw NotFoundException(message = "not found colorid = $id ")
         note.apply {
             this.title = newNote.title
@@ -103,7 +103,7 @@ class NoteServiceImpl(
     }
 
     override suspend fun deleteNote(id: Long): Note {
-        var note = this.getNote(id)
+        val note = this.getNote(id)
         noteRepository.deleteById(id)
         return note
     }

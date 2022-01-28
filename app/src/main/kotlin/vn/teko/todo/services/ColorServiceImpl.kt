@@ -13,8 +13,7 @@ class ColorServiceImpl(
 ) : ColorService {
 
     override suspend fun getColors(): List<Color> {
-        val colors = colorRepository.findAll().toList().map { it.toColor() }
-        return colors
+        return colorRepository.findAll().toList().map { it.toColor() }
     }
 
     override suspend fun getColor(id: Long): Color {

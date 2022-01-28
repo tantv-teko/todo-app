@@ -15,13 +15,12 @@ class LabelServiceImpl(
 ) : LabelService {
 
     override suspend fun getLabels(): List<Label> {
-        val labels = labelRepositories.findAll().toList().map { it.toLabel() };
-        return labels;
+        return labelRepositories.findAll().toList().map { it.toLabel() }
 
     }
     override suspend fun getLabel(id: Long): Label {
         val labelModel = labelRepositories.findById(id) ?: throw NotFoundException(message = "not found labelid = $id ")
-        return labelModel.toLabel();
+        return labelModel.toLabel()
     }
 
     override suspend fun createLabel(label: Label): Label {
