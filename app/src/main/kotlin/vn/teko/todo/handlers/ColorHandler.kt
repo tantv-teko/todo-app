@@ -1,6 +1,7 @@
 package vn.teko.todo.handlers
 
 
+import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.*
 import vn.teko.todo.controllers.toColorDto
@@ -14,7 +15,7 @@ class ColorHandler(
         req: ServerRequest,
     ): ServerResponse {
         return ServerResponse.ok()
-            .json()
+            .contentType(MediaType.APPLICATION_JSON)
             .bodyValueAndAwait(colorService.getColors().map { it.toColorDto() })
     }
 

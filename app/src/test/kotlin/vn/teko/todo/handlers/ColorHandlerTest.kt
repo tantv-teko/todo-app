@@ -1,35 +1,35 @@
-package vn.teko.todo.controllers
+package vn.teko.todo.handlers
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
+
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.BDDMockito.given
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.http.MediaType
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.reactive.server.WebTestClient
-import org.springframework.test.web.servlet.*
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import vn.teko.todo.controllers.toColorDto
+import vn.teko.todo.routers.ColorRouterConfiguration
 import vn.teko.todo.services.Color
 import vn.teko.todo.services.ColorService
 
-
 @ExtendWith(SpringExtension::class)
-@WebFluxTest(ColorController::class)
-internal class ColorControllerTest {
+@WebFluxTest(ColorHandler::class, ColorRouterConfiguration::class)
+internal class ColorHandlerTest {
 
     @Autowired
-    private lateinit var webClient: WebTestClient
+    private lateinit var client: WebTestClient
     @MockBean
     private lateinit var colorService: ColorService
     @Autowired
     lateinit var objectMapper: ObjectMapper
 
     @Test
-    suspend fun getColors() {
+    fun getColors() {
         val color1 = Color(
             id = 1,
             name = "red",
@@ -62,21 +62,13 @@ internal class ColorControllerTest {
         )
         val colors = listOf<Color>(color1, color2, color3, color4, color5)
         val colorsJSON = objectMapper.writeValueAsString(colors.map { it.toColorDto() })
-        given(colorService.getColors()).willReturn(colors)
-        webClient.get().uri("api/colors")
-            .accept(MediaType.APPLICATION_JSON)
-            .exchange()
-            .expectStatus().isOk()
-            .expectBody().equals(colorsJSON)
-
-        /*
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(MockMvcResultMatchers.status().isOk)
-            .andExpect(MockMvcResultMatchers.content().json(colorsJSON))
-            .andReturn()
-
-             */
+        runBlocking {
+            given(colorService.getColors()).willReturn(colors)
+            client.get().uri("/api/colors")
+                .exchange()
+                .expectStatus().isOk
+                .expectBody().equals(colorsJSON)
+        }
 
     }
-
 }

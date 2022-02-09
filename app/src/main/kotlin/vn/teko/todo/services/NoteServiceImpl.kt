@@ -52,20 +52,21 @@ class NoteServiceImpl(
                 noteId = note.id,
                 colorId = note.color.id
         ))
-        note.apply {
-            color = colorRepository.findByNoteId(note.id).toColor()
-            labels = addNote.labels
-        }
 
-        note.labels.forEach {
-            noteLabelRepository.save(NoteLabelModel(
-                noteId = note.id,
-                labelId = it.id,
-            ))
-        }
-        note.apply {
-            labels = labelRepository.findByNoteId(note.id).map { it.toLabel() }
-        }
+       note.apply {
+           color = colorRepository.findByNoteId(note.id).toColor()
+           labels = addNote.labels
+       }
+
+       note.labels.forEach {
+           noteLabelRepository.save(NoteLabelModel(
+               noteId = note.id,
+               labelId = it.id,
+           ))
+       }
+       note.apply {
+           labels = labelRepository.findByNoteId(note.id).map { it.toLabel() }
+       }
 
         return note
     }
