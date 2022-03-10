@@ -1,8 +1,10 @@
 package vn.teko.todo.services
 
 import kotlinx.coroutines.flow.toList
+import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.client.RestTemplate
 import vn.teko.todo.exception.NotFoundException
 import vn.teko.todo.repositories.*
 import java.time.LocalDateTime
@@ -18,9 +20,19 @@ class NoteServiceImpl(
 ) : NoteService {
 
     override suspend fun getNotes(): List<Note> {
+        val uri = "https://run.mocky.io/v3/90431f7d-485f-4420-b783-f674a4c733c7"
+        val restTemplate = RestTemplate()
+        val labeldefaul = restTemplate.exchange(
+            uri,
+            HttpMethod.GET,
+            null,
+            Label::class.java
+        )
+
         val notes = noteRepository.findAll().toList().map { it.toNote(colorRepository.findByNoteId(it.id).toColor()) }
         notes.map {
             it.labels = labelRepository.findByNoteId(it.id).map { it.toLabel() }
+            it.labelDefaul = labeldefaul.body!!
         }
         return notes
     }
@@ -31,6 +43,17 @@ class NoteServiceImpl(
         note.apply {
             labels = labelRepository.findByNoteId(note.id).map { it.toLabel() }
         }
+
+        val uri = "https://run.mocky.io/v3/90431f7d-485f-4420-b783-f674a4c733c7"
+        val restTemplate = RestTemplate()
+        val labeldefaul = restTemplate.exchange(
+            uri,
+            HttpMethod.GET,
+            null,
+            Label::class.java
+        )
+        note.labelDefaul = labeldefaul.body!!
+
         return note
     }
 

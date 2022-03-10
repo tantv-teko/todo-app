@@ -1,10 +1,16 @@
 package vn.teko.todo.handlers
 
+import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Component
+import org.springframework.web.client.RestTemplate
 import org.springframework.web.reactive.function.server.*
 import vn.teko.todo.controllers.toNoteDto
-import vn.teko.todo.resquest.*
+import vn.teko.todo.resquest.AddNoteRequest
+import vn.teko.todo.resquest.UpdateNoteRequest
+import vn.teko.todo.resquest.toNote
+import vn.teko.todo.services.Label
 import vn.teko.todo.services.NoteService
+
 
 @Component
 class NoteHandler (
@@ -55,6 +61,5 @@ class NoteHandler (
             .json()
             .bodyValueAndAwait(noteService.deleteNote(id).toNoteDto())
     }
-
 
 }

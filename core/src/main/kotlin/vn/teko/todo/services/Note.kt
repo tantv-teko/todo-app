@@ -13,6 +13,10 @@ data class Note(
             isDefault = true,
     ),
     var labels: List<Label> = listOf(),
+    var labelDefaul: Label = Label(
+        id =0,
+        name = "",
+    ),
     val createAt: LocalDateTime,
     var editedAt: LocalDateTime,
 )
