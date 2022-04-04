@@ -1,17 +1,26 @@
 spring:
   r2dbc:
-  driver-class-name: com.mysql.cj.jdbc.Driver
-  url: r2dbc:pool:mysql://${DB_HOST}:${DB_POST}/{DB_NAME}
-  username: $(DB_USERNAME)
-  password: $(DB_PASSWORD)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: r2dbc:pool:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   liquibase:
-    url: jdbc:mysql://${DB_HOST}:${DB_POST}/{DB_NAME}
-    user: $(DB_USERNAME)
-    password: $(DB_PASSWORD)
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    user: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     change-log: "classpath:/db/changelog/changelog-master.yaml"
     database-change-log-table: database_changelog
     database-change-log-lock-table: database_changelog_lock
-    contexts: $(DB_CONTEXT)
+  redis:
+    host: ${RD_HOSTss}
+    port: ${RD_PORT}
+  cache:
+    type: redis
+    redis:
+      cache-null-values: true
+      time-to-live: 40000
+
+
 api:
   baseUrl: ${Base_Url}

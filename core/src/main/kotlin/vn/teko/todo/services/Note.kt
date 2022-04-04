@@ -1,5 +1,6 @@
 package vn.teko.todo.services
 
+import java.io.Serializable
 import java.time.LocalDateTime
 
 data class Note(
@@ -19,4 +20,4 @@ data class Note(
     ),
     val createAt: LocalDateTime,
     var editedAt: LocalDateTime,
-)
+): Serializable

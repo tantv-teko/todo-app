@@ -1,6 +1,9 @@
 package vn.teko.todo.services
 
 import kotlinx.coroutines.flow.toList
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.CachePut
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.client.RestTemplate
@@ -20,6 +23,7 @@ class NoteServiceImpl(
     private val noteapi: NoteApi,
 ) : NoteService {
 
+    @Cacheable("note")
     override suspend fun getNotes(): List<Note> {
         val labeldefaul = noteapi.getLableDefaul()
         val notes = noteRepository.findAll().toList().map { it.toNote(colorRepository.findByNoteId(it.id).toColor()) }
@@ -30,6 +34,7 @@ class NoteServiceImpl(
         return notes
     }
 
+    @Cacheable("note", key = "#id")
     override suspend fun getNote(id: Long): Note {
         val noteModel = noteRepository.findById(id) ?: throw NotFoundException(message = "not found noteId = $id ")
         val note = noteModel.toNote(colorRepository.findByNoteId(noteModel.id).toColor())
@@ -87,7 +92,7 @@ class NoteServiceImpl(
         return note
     }
 
-
+    @CachePut("note", key = "#id")
     override suspend fun updateNote(id: Long, newNote: Note): Note {
         val note = this.getNote(id)
         val colorModel =
@@ -124,6 +129,7 @@ class NoteServiceImpl(
         return note
     }
 
+    @CacheEvict("note",allEntries = false, key = "#id")
     override suspend fun deleteNote(id: Long): Note {
         val note = this.getNote(id)
         noteRepository.deleteById(id)
